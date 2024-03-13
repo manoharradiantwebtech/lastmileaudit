@@ -54,7 +54,7 @@ Sub-location
                                     <td>{{$sublocation->user->phone ?? ''}}</td>
                                     <td>{{$sublocation->user->email ?? ''}}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('master.sublocation.edit', $sublocation->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('master.sublocation.edit', $sublocation->sub_location->id) }}" class="btn btn-primary btn-sm">
                                             <i class="me-2 fas fa-edit"></i> Edit
                                         </a>
                                     </td>

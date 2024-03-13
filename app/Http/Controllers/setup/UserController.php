@@ -11,8 +11,6 @@ use App\Repositories\LocationRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\SubLocationRepository;
 use App\Repositories\UserLocationDetailRepository;
-use Exception;
-use Illuminate\Http\Client\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\DB;
@@ -113,6 +111,7 @@ class UserController extends Controller
         $roles = $this->roleRepository->getAllRoles();
         $userRole = $user->roles->first();
         $locations = $this->locationRepository->getAllLocation();
+        // dd($user->userlocationdetail[0]->location->id);
         return view('master.user.edit', compact('user', 'roles', 'userRole', 'locations'));
     }
 
@@ -125,16 +124,21 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-        $userDetails = $request->only([
+        $userDetails = array_filter($request->only([
             'name',
             'email',
+            'password',
             'phone',
-            'status',
-        ]);
+            'doj'
+        ]));
         $roleId = $request->input('role');
+        $userlocdetails = array_filter($request->only(['location_id', 'sub_location_id']));
+
         try {
             DB::beginTransaction();
-            $this->adminUserRepository->updateUser($id, $userDetails, $roleId);
+            $user = $this->adminUserRepository->updateUser($id, $userDetails, $roleId);
+            $userlocdetails['user_id'] = $user->id;
+            $this->userLocationDetailRepository->createUserLocationDetail($userlocdetails);
             DB::commit();
 
             return redirect()->route('master.user.index')->with('message', trans('app.user.user_updated'));

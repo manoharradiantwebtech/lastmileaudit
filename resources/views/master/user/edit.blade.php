@@ -6,8 +6,9 @@ Edit User
 <section class="users-section py-4">
     <div class="container container-custom">
         <div class="content-card card card-body mb-3">
-            <form action="{{ route('master.user.store') }}" method="post" name="user_form">
+            <form action="{{ route('master.user.update', $user->id) }}" method="post" name="user_form">
                 @csrf
+                @method('PUT')
                 <div class="page-header pb-0"> <h4 class="fs22">Edit User</h4> </div>
                 <hr>
                 <div class="row">
@@ -57,7 +58,7 @@ Edit User
                         <select class="form-select" id="location" name="location_id" onchange="setsublocation()">
                             <option selected>Choose...</option>
                             @foreach ($locations as $location)
-                                <option value="{{$location->id}}">{{$location->name}}</option> 
+                                <option value="{{$location->id}}" {{$user->userlocationdetail[0]->location->id == $location->id ? 'selected' : ''}}>{{$location->name}}</option> 
                             @endforeach
                         </select>
                     </div>

@@ -25,10 +25,9 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email|unique:users,email,' . $this->user,
-            'phone' => 'required|numeric|unique:users,phone,' . $this->user,
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
             'profile_pic' => 'file|nullable',
-            'status' => 'required|boolean',
             'role' => 'required|exists:roles,id',
         ];
     }

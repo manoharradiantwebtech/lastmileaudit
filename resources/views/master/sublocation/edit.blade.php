@@ -6,7 +6,7 @@
     <section class="locations-section py-4">
         <div class="container container-custom">
             <div class="content-card card card-body mb-3">
-                <form action="{{ route('master.sublocation.update', $sublocation->id) }}" method="post" name="location_form">
+                <form action="{{ route('master.sublocation.update', $sublocation->sub_location->id) }}" method="post" name="location_form">
                     @method('PUT')
                     @csrf
                     <div class="page-header pb-0">
@@ -28,7 +28,7 @@
                         <div class="col-md-6 mb-3">
                             <label for="sublocationName" class="form-label fw500 text-dark mb-1">Sublocation Name</label>
                             <input type="text" class="form-control" id="sublocationName"
-                                placeholder="Enter sublocation name" name="name" value="{{ old('name') ?? $sublocation->name }}">
+                                placeholder="Enter sublocation name" name="name" value="{{ old('name') ?? $sublocation->sub_location->name }}">
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -39,7 +39,7 @@
                     <div class="mb-3">
                         <label for="sublocationDescription" class="form-label fw500 text-dark mb-1">Description</label>
                         <textarea name="description" class="form-control" id="sublocationDescription" rows="3"
-                            placeholder="Describe the sublocation">{{ old('description') ?? $sublocation->description }}</textarea>
+                            placeholder="Describe the sublocation">{{ old('description') ?? $sublocation->sub_location->description }}</textarea>
                         @error('description')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

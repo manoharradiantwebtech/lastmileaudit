@@ -22,7 +22,9 @@ class SubLocationRepository
      */
     public function getSubLocationById(int $SubLocationId)
     {
-        return SubLocation::find($SubLocationId);
+        return UserLocationDetail::with(['sub_location', 'user'])
+        ->where('sub_location_id', $SubLocationId)
+        ->get()[0];
     }
 
     public function getSubLocationByLocationId($locationId)
